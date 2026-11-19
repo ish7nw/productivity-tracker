@@ -1,36 +1,56 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Productivity Log
 
-## Getting Started
+Log what you're doing; the time and date are stamped automatically. The app scores each day,
+exports a day to your calendar (.ics), and has an Analysis page that turns your logs into a
+dithered mountain range of your focus hours. Pro (key-locked) adds editing times/dates,
+backfilling, and a comparison with Elon Musk, Steve Jobs, Tim Cook and Jeff Bezos.
 
-First, run the development server:
+Built with Next.js, TypeScript, Tailwind CSS and the shadcn project structure.
+
+## Run it on your computer
+
+You need Node.js 20 or newer (https://nodejs.org).
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000. The Analysis page is at http://localhost:3000/analysis.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Host it free on Vercel
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. Create a free GitHub account and a new empty repository.
+2. In this folder, run:
+   ```bash
+   git add -A
+   git commit -m "Productivity Log"
+   git branch -M main
+   git remote add origin https://github.com/YOUR-NAME/YOUR-REPO.git
+   git push -u origin main
+   ```
+3. Go to https://vercel.com, sign in with GitHub, click **Add New → Project**, pick the repo,
+   and click **Deploy**. No settings to change. You get a free `your-project.vercel.app` URL,
+   and every `git push` redeploys.
 
-## Learn More
+The site is fully static, so Netlify or Cloudflare Pages work too.
 
-To learn more about Next.js, take a look at the following resources:
+## Where the data lives
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Entries are saved in the visitor's own browser (localStorage). Each person who opens your site
+gets their own private log; nothing is sent to a server. Clearing browser data or switching
+devices starts a fresh log.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Project layout
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```
+app/page.tsx                         tracker
+app/analysis/page.tsx                analysis
+components/ui/backgrounds-glyph.tsx  glyph background (as pasted)
+components/ui/ridgeline-dither-footer.tsx  ridgeline footer (as pasted; its helpers drive the range)
+components/ui/button.tsx             button primitive
+components/focus-range.tsx           the data-driven dithered range
+components/tracker.tsx               tracker UI
+components/analysis-view.tsx         analysis UI
+lib/                                 scoring, analysis, .ics export, storage
+```
